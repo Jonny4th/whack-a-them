@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class BeingHitState : MoleStateBase
+public class BeingHitState : IMoleState
 {
     private const float m_HitAnimationTime = 0.5f; //Cooldown time in seconds.
     private float m_HitTimer = 0.0f;
-    public override void Enter(IMole mole)
+    public void Enter(Mole mole)
     {
         Debug.Log("hit");
 
@@ -12,11 +12,11 @@ public class BeingHitState : MoleStateBase
         mole.SetHitVisual();
     }
 
-    public override void Exit(IMole mole) { }
+    public void Exit(Mole mole) { }
 
-    public override void HandleInteract(IMole mole) { }
+    public void HandleInteract(Mole mole) { }
 
-    public override void Update(IMole mole)
+    public void Update(Mole mole)
     {
         m_HitTimer += Time.deltaTime;
         if(m_HitTimer >= m_HitAnimationTime)

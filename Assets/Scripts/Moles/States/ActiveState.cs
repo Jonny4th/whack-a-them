@@ -1,23 +1,23 @@
 using UnityEngine;
 
-public class ActiveState : MoleStateBase
+public class ActiveState : IMoleState
 {
     private const float m_ActiveTime = 2.0f; //Active time in seconds.
     private float m_ActiveTimer = 0.0f;
 
-    public override void Enter(IMole mole)
+    public void Enter(Mole mole)
     {
         m_ActiveTimer = 0.0f;
         mole.SetActiveVisual();
     }
-    public override void Exit(IMole mole) { }
+    public void Exit(Mole mole) { }
 
-    public override void HandleInteract(IMole mole)
+    public void HandleInteract(Mole mole)
     {
         mole.SetHitVisual();
     }
 
-    public override void Update(IMole mole)
+    public void Update(Mole mole)
     {
         m_ActiveTimer += Time.deltaTime;
 

@@ -1,13 +1,13 @@
-public class InactiveState : MoleStateBase
+public class InactiveState : IMoleState
 {
-    public override void Enter(IMole mole)
+    public void Enter(Mole mole)
     {
         mole.SetInactiveVisual();
     }
 
-    public override void Exit(IMole mole) { }
+    public void Exit(Mole mole) { }
 
-    public override void HandleInteract(IMole mole) { }
+    public void HandleInteract(Mole mole) { }
 
-    public override void Update(IMole mole) { }
+    public void Update(Mole mole) { }
 }

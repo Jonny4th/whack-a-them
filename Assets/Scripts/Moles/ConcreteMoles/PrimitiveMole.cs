@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PrimitiveMole : MonoBehaviour, IMole, IPointerDownHandler
+public class PrimitiveMole : Mole, IPointerDownHandler
 {
     [SerializeField]
     private SpriteRenderer m_Visual;
@@ -15,7 +15,7 @@ public class PrimitiveMole : MonoBehaviour, IMole, IPointerDownHandler
     [SerializeField]
     private Color m_HitColor = Color.green;
 
-    private MoleStateBase m_CurrentState;
+    private IMoleState m_CurrentState;
 
     private void Awake()
     {
@@ -33,24 +33,24 @@ public class PrimitiveMole : MonoBehaviour, IMole, IPointerDownHandler
         m_CurrentState.HandleInteract(this);
     }
 
-    public void SetState(MoleStateBase stateBase)
+    public override void SetState(IMoleState stateBase)
     {
         m_CurrentState?.Exit(this);
         m_CurrentState = stateBase;
         m_CurrentState.Enter(this);
     }
 
-    public void SetActiveVisual()
+    public override void SetActiveVisual()
     {
         m_Visual.color = m_ActiveColor;
     }
 
-    public void SetHitVisual()
+    public override void SetHitVisual()
     {
         m_Visual.color = m_HitColor;
     }
 
-    public void SetInactiveVisual()
+    public override void SetInactiveVisual()
     {
         m_Visual.color = m_InactiveColor;
     }
