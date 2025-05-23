@@ -17,6 +17,8 @@ public class PrimitiveMole : Mole, IPointerDownHandler
 
     private IMoleState m_CurrentState;
 
+    public override MoleState CurrentState => m_CurrentState.State;
+
     private void Awake()
     {
         m_CurrentState = new InactiveState();

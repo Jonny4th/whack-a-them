@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ActiveState : IMoleState
 {
+    public MoleState State => MoleState.Active;
+
     private const float m_ActiveTime = 2.0f; //Active time in seconds.
     private float m_ActiveTimer = 0.0f;
 
@@ -14,7 +16,8 @@ public class ActiveState : IMoleState
 
     public void HandleInteract(Mole mole)
     {
-        mole.SetHitVisual();
+        mole.OnMoleHitEvent?.Invoke();
+        mole.SetState(new BeingHitState());
     }
 
     public void Update(Mole mole)

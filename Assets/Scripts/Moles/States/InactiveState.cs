@@ -1,5 +1,7 @@
 public class InactiveState : IMoleState
 {
+    public MoleState State => MoleState.Inactive;
+
     public void Enter(Mole mole)
     {
         mole.SetInactiveVisual();
