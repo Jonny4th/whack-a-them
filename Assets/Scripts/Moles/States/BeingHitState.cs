@@ -5,12 +5,12 @@ public class BeingHitState : IMoleState
     public MoleState State => MoleState.Hit;
 
     private const float m_HitAnimationTime = 0.5f; //Cooldown time in seconds.
-    private float m_HitTimer = 0.0f;
+    private float m_HitAnimationTimer = 0.0f;
+
     public void Enter(Mole mole)
     {
-        Debug.Log("hit");
         mole.SetHitVisual();
-        m_HitTimer = 0.0f;
+        m_HitAnimationTimer = 0.0f;
     }
 
     public void Exit(Mole mole) { }
@@ -19,9 +19,9 @@ public class BeingHitState : IMoleState
 
     public void Update(Mole mole)
     {
-        m_HitTimer += Time.deltaTime;
+        m_HitAnimationTimer += Time.deltaTime;
 
-        if(m_HitTimer >= m_HitAnimationTime)
+        if(m_HitAnimationTimer >= m_HitAnimationTime)
         {
             mole.SetState(MoleState.Cooldown);
         }

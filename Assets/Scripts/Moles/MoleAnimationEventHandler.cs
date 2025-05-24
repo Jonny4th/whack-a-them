@@ -7,7 +7,6 @@ public class MoleAnimationEventHandler : MonoBehaviour
 
     public void OnRetractDone()
     {
-        Debug.Log("Mole has retracted.");
         OnRetracted?.Invoke();
     }
 }

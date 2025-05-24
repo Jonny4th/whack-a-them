@@ -22,10 +22,10 @@ public abstract class Mole : MonoBehaviour
 
     public virtual void SetState(MoleState stateEnum)
     {
-
         _currentState?.Exit(this);
         _currentState = GetConcreteState(stateEnum);
         _currentState.Enter(this);
+        Debug.Log($"Mole state changed to: {_currentState.State}");
     }
 
     public abstract void SetActiveVisual();

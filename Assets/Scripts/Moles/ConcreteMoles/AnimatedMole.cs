@@ -54,8 +54,7 @@ public class AnimatedMole : Mole, IPointerDownHandler
 
     public override void SetHitVisual()
     {
-        //testing purpose, you can replace this with an animation or visual effect
-        Inactivate();
+        m_MoleAnimator.SetTrigger(m_HitTriggerName);
     }
 
     private void Activate()
