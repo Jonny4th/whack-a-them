@@ -13,7 +13,7 @@ public class MoleEditorScript : Editor
 
         if(GUILayout.Button("Set Active"))
         {
-            mole.SetState(new ActiveState());
+            mole.SetState(MoleState.Active);
         }
 
     }

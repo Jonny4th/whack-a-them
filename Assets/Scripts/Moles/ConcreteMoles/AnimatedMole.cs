@@ -1,19 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PrimitiveMole : Mole, IPointerDownHandler
+public class AnimatedMole : Mole, IPointerDownHandler
 {
     [SerializeField]
-    private SpriteRenderer m_Visual;
+    private GameObject m_MoleVisual;
 
     [SerializeField]
-    private Color m_InactiveColor = Color.black;
-
-    [SerializeField]
-    private Color m_ActiveColor = Color.yellow;
-
-    [SerializeField]
-    private Color m_HitColor = Color.green;
+    private Collider2D m_Collider;
 
     private readonly IMoleState InactiveState = new InactiveState();
     private readonly IMoleState ActiveState = new ActiveState();
@@ -26,24 +20,37 @@ public class PrimitiveMole : Mole, IPointerDownHandler
         _currentState.Enter(this);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _currentState.HandleInteract(this);
-    }
-
     public override void SetActiveVisual()
     {
-        m_Visual.color = m_ActiveColor;
-    }
-
-    public override void SetHitVisual()
-    {
-        m_Visual.color = m_HitColor;
+        Activate();
     }
 
     public override void SetInactiveVisual()
     {
-        m_Visual.color = m_InactiveColor;
+        Inactivate();
+    }
+
+    public override void SetHitVisual()
+    {
+        //testing purpose, you can replace this with an animation or visual effect
+        Inactivate();
+    }
+
+    private void Activate()
+    {
+        m_MoleVisual.SetActive(true);
+        m_Collider.enabled = true;
+    }
+
+    private void Inactivate()
+    {
+        m_MoleVisual.SetActive(false);
+        m_Collider.enabled = false;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _currentState.HandleInteract(this);
     }
 
     protected override IMoleState GetConcreteState(MoleState stateEnum)

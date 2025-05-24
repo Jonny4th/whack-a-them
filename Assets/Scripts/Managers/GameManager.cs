@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +9,18 @@ public class GameManager : MonoBehaviour
     private Mole[] m_Moles;
 
     [SerializeField]
+    private TMP_Text m_ScoreText;
+
+    [SerializeField]
     Button m_StartButton;
 
     [SerializeField]
     private float m_GameDuration = 60f;
 
     [SerializeField]
-    private float m_Interval = 1f;
+    private AnimationCurve m_ProgressiveIntervalCurve;
+
+    private float m_Interval => m_ProgressiveIntervalCurve.Evaluate(m_GameTimer / m_GameDuration);
 
     private float m_GameTimer = 0f;
     private int m_Score = 0;
@@ -25,7 +31,7 @@ public class GameManager : MonoBehaviour
     {
         foreach(var mole in m_Moles)
         {
-            mole.OnMoleHitEvent.AddListener(() => m_Score++);
+            mole.OnMoleHitEvent.AddListener(() => AddScore(1));
         }
 
         m_StartButton.onClick.AddListener(OnStartButtonClicked);
@@ -35,22 +41,10 @@ public class GameManager : MonoBehaviour
     {
         foreach(var mole in m_Moles)
         {
-            mole.OnMoleHitEvent.RemoveListener(() => m_Score++);
+            mole.OnMoleHitEvent.RemoveListener(() => AddScore(1));
         }
 
         m_StartButton.onClick.RemoveListener(OnStartButtonClicked);
-    }
-
-    private void Update()
-    {
-        if(m_GameTimer >= m_GameDuration)
-        {
-            EndGame();
-        }
-        else
-        {
-            m_GameTimer += Time.deltaTime;
-        }
     }
 
     private void OnStartButtonClicked()
@@ -67,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
 
         m_Score = 0;
-        m_GameTimer = 0;
+        m_ScoreText.text = $"Score: {m_Score}";
 
         m_StartButton.gameObject.SetActive(false);
         m_GameProcess = StartCoroutine(GameProcess());
@@ -81,20 +75,28 @@ public class GameManager : MonoBehaviour
             m_GameProcess = null;
         }
 
+        foreach(var mole in m_Moles)
+        {
+            mole.SetState(MoleState.Inactive);
+        }
+
         m_StartButton.gameObject.SetActive(true);
     }
 
     public void AddScore(int score)
     {
         m_Score += score;
+        m_ScoreText.text = $"Score: {m_Score}";
     }
 
     private IEnumerator GameProcess()
     {
+        StartCoroutine(Timer());
+
         while(true)
         {
-            GetRandomMole().SetState(new ActiveState());
             yield return new WaitForSeconds(m_Interval);
+            GetRandomMole().SetState(MoleState.Active);
         }
 
         Mole GetRandomMole()
@@ -102,12 +104,25 @@ public class GameManager : MonoBehaviour
             var randomIndex = Random.Range(0, m_Moles.Length);
             var randomMole = m_Moles[randomIndex];
 
-            if(randomMole.CurrentState == MoleState.Active)
+            if(randomMole.CurrentState != MoleState.Inactive)
             {
                 return GetRandomMole();
             }
 
             return randomMole;
         }
+    }
+
+    private IEnumerator Timer()
+    {
+        m_GameTimer = 0f;
+
+        while(m_GameTimer < m_GameDuration)
+        {
+            yield return null;
+            m_GameTimer += Time.deltaTime;
+        }
+        
+        EndGame();
     }
 }

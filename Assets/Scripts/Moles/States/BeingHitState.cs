@@ -20,9 +20,10 @@ public class BeingHitState : IMoleState
     public void Update(Mole mole)
     {
         m_HitTimer += Time.deltaTime;
+
         if(m_HitTimer >= m_HitAnimationTime)
         {
-            mole.SetState(new InactiveState());
+            mole.SetState(MoleState.Cooldown);
         }
     }
 }

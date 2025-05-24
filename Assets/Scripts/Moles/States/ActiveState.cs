@@ -17,7 +17,7 @@ public class ActiveState : IMoleState
     public void HandleInteract(Mole mole)
     {
         mole.OnMoleHitEvent?.Invoke();
-        mole.SetState(new BeingHitState());
+        mole.SetState(MoleState.Hit);
     }
 
     public void Update(Mole mole)
@@ -26,7 +26,7 @@ public class ActiveState : IMoleState
 
         if(m_ActiveTimer >= m_ActiveTime)
         {
-            mole.SetState(new InactiveState());
+            mole.SetState(MoleState.Cooldown);
         }
     }
 }

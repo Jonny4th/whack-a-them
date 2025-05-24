@@ -5,7 +5,8 @@ public enum MoleState
 {
     Inactive,
     Active,
-    Hit
+    Hit,
+    Cooldown,
 }
 
 public abstract class Mole : MonoBehaviour
@@ -19,14 +20,16 @@ public abstract class Mole : MonoBehaviour
         _currentState.Update(this);
     }
 
-    public virtual void SetState(IMoleState stateBase)
+    public virtual void SetState(MoleState stateEnum)
     {
+
         _currentState?.Exit(this);
-        _currentState = stateBase;
+        _currentState = GetConcreteState(stateEnum);
         _currentState.Enter(this);
     }
 
     public abstract void SetActiveVisual();
     public abstract void SetHitVisual();
     public abstract void SetInactiveVisual();
+    protected abstract IMoleState GetConcreteState(MoleState stateEnum);
 }
