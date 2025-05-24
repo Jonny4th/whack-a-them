@@ -9,6 +9,18 @@ public class AnimatedMole : Mole, IPointerDownHandler
     [SerializeField]
     private Collider2D m_Collider;
 
+    [SerializeField]
+    private Animator m_MoleAnimator;
+
+    [SerializeField]
+    private MoleAnimationEventHandler m_MoleAnimationEventHandler;
+
+    [SerializeField]
+    private string m_HitTriggerName = "HitTrigger";
+
+    [SerializeField]
+    private string m_HideTriggerName = "HideTrigger";
+
     private readonly IMoleState InactiveState = new InactiveState();
     private readonly IMoleState ActiveState = new ActiveState();
     private readonly IMoleState HitState = new BeingHitState();
@@ -20,6 +32,16 @@ public class AnimatedMole : Mole, IPointerDownHandler
         _currentState.Enter(this);
     }
 
+    private void OnEnable()
+    {
+        m_MoleAnimationEventHandler.OnRetracted.AddListener(HandleMoleRetracted);
+    }
+
+    private void OnDisable()
+    {
+        m_MoleAnimationEventHandler.OnRetracted.RemoveListener(HandleMoleRetracted);
+    }
+
     public override void SetActiveVisual()
     {
         Activate();
@@ -27,7 +49,7 @@ public class AnimatedMole : Mole, IPointerDownHandler
 
     public override void SetInactiveVisual()
     {
-        Inactivate();
+        m_MoleAnimator.SetTrigger(m_HideTriggerName);
     }
 
     public override void SetHitVisual()
@@ -46,6 +68,11 @@ public class AnimatedMole : Mole, IPointerDownHandler
     {
         m_MoleVisual.SetActive(false);
         m_Collider.enabled = false;
+    }
+
+    private void HandleMoleRetracted()
+    {
+        Inactivate();
     }
 
     public void OnPointerDown(PointerEventData eventData)
