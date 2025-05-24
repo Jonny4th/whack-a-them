@@ -15,31 +15,15 @@ public class PrimitiveMole : Mole, IPointerDownHandler
     [SerializeField]
     private Color m_HitColor = Color.green;
 
-    private IMoleState m_CurrentState;
-
-    public override MoleState CurrentState => m_CurrentState.State;
-
     private void Awake()
     {
-        m_CurrentState = new InactiveState();
-        m_CurrentState.Enter(this);
-    }
-
-    private void Update()
-    {
-        m_CurrentState.Update(this);
+        _currentState = new InactiveState();
+        _currentState.Enter(this);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        m_CurrentState.HandleInteract(this);
-    }
-
-    public override void SetState(IMoleState stateBase)
-    {
-        m_CurrentState?.Exit(this);
-        m_CurrentState = stateBase;
-        m_CurrentState.Enter(this);
+        _currentState.HandleInteract(this);
     }
 
     public override void SetActiveVisual()
