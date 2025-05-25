@@ -23,12 +23,26 @@ namespace WhackAThem.GameLogics.Managers
         [SerializeField]
         private AnimationCurve m_ProgressiveIntervalCurve;
 
+        [SerializeField]
+        private AudioScriptableEvent m_MusicChannel;
+
+        [SerializeField]
+        private AudioClip m_StartMenuMusic;
+
+        [SerializeField]
+        private AudioClip m_GameplayMusic;
+
         private float m_Interval => m_ProgressiveIntervalCurve.Evaluate(m_GameTimer / m_GameDuration);
 
         private float m_GameTimer = 0f;
         private int m_Score = 0;
 
         private Coroutine m_GameProcess;
+
+        private void Start()
+        {
+            m_MusicChannel.Play(m_StartMenuMusic);
+        }
 
         private void OnEnable()
         {
@@ -84,6 +98,7 @@ namespace WhackAThem.GameLogics.Managers
             }
 
             m_StartButton.gameObject.SetActive(true);
+            m_MusicChannel.Play(m_StartMenuMusic);
         }
 
         public void AddScore(int score)
@@ -95,6 +110,8 @@ namespace WhackAThem.GameLogics.Managers
         private IEnumerator GameProcess()
         {
             StartCoroutine(Timer());
+
+            m_MusicChannel.Play(m_GameplayMusic);
 
             while(true)
             {
