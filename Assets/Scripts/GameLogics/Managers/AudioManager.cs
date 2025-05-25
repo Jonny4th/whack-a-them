@@ -16,10 +16,16 @@ namespace WhackAThem.GameLogics.Managers
         [SerializeField]
         AudioScriptableEvent m_SoundEffectChannel;
 
-        private void Start()
+        private void OnEnable()
         {
             m_SoundEffectChannel.PlaySoundRequest += PlaySoundEffect;
             m_MusicChannel.PlaySoundRequest += PlayMusic;
+        }
+
+        private void OnDisable()
+        {
+            m_SoundEffectChannel.PlaySoundRequest -= PlaySoundEffect;
+            m_MusicChannel.PlaySoundRequest -= PlayMusic;
         }
 
         private void PlayMusic(AudioClip clip)
