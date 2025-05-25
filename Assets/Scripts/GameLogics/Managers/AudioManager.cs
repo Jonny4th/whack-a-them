@@ -33,7 +33,7 @@ namespace WhackAThem.GameLogics.Managers
             var source = Instantiate(m_SoundEffectAudioSourceObject);
             source.clip = clip;
             source.PlayOneShot(clip);
-            Destroy(source, clip.length);
+            Destroy(source.gameObject, clip.length);
         }
     }
 }

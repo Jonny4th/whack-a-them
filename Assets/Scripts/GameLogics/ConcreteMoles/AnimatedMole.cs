@@ -25,6 +25,12 @@ namespace WhackATham.GameLogics.Moles
         [SerializeField]
         private string m_HideTriggerName = "HideTrigger";
 
+        [SerializeField]
+        private AudioScriptableEvent m_SoundEffectChannel;
+
+        [SerializeField]
+        private AudioClip[] m_HitSfxs;
+
         private readonly IMoleState InactiveState = new InactiveState();
         private readonly IMoleState ActiveState = new ActiveState();
         private readonly IMoleState HitState = new BeingHitState();
@@ -58,6 +64,9 @@ namespace WhackATham.GameLogics.Moles
 
         public override void SetHitVisual()
         {
+            var rand = Random.Range(0, m_HitSfxs.Length);
+            m_SoundEffectChannel.Play(m_HitSfxs[rand]);
+
             m_MoleAnimator.SetTrigger(m_HitTriggerName);
         }
 
