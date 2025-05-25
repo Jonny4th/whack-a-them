@@ -1,0 +1,16 @@
+{
+    "name": "WhackAThem.GameLogics.States",
+    "rootNamespace": "",
+    "references": [
+        "GUID:16c574c6802adca4a961fd7bd82ed8ce"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

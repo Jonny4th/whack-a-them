@@ -1,35 +1,38 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum MoleState
+namespace WhackATham.Domain.Moles
 {
-    Inactive,
-    Active,
-    Hit,
-    Cooldown,
-}
-
-public abstract class Mole : MonoBehaviour
-{
-    public virtual MoleState CurrentState => _currentState.State;
-    public UnityEvent OnMoleHitEvent;
-    protected IMoleState _currentState;
-
-    protected virtual void Update()
+    public enum MoleState
     {
-        _currentState.Update(this);
+        Inactive,
+        Active,
+        Hit,
+        Cooldown,
     }
 
-    public virtual void SetState(MoleState stateEnum)
+    public abstract class Mole : MonoBehaviour
     {
-        _currentState?.Exit(this);
-        _currentState = GetConcreteState(stateEnum);
-        _currentState.Enter(this);
-        Debug.Log($"Mole state changed to: {_currentState.State}");
-    }
+        public virtual MoleState CurrentState => _currentState.State;
+        public UnityEvent OnMoleHitEvent;
+        protected IMoleState _currentState;
 
-    public abstract void SetActiveVisual();
-    public abstract void SetHitVisual();
-    public abstract void SetInactiveVisual();
-    protected abstract IMoleState GetConcreteState(MoleState stateEnum);
+        protected virtual void Update()
+        {
+            _currentState.Update(this);
+        }
+
+        public virtual void SetState(MoleState stateEnum)
+        {
+            _currentState?.Exit(this);
+            _currentState = GetConcreteState(stateEnum);
+            _currentState.Enter(this);
+            Debug.Log($"Mole state changed to: {_currentState.State}");
+        }
+
+        public abstract void SetActiveVisual();
+        public abstract void SetHitVisual();
+        public abstract void SetInactiveVisual();
+        protected abstract IMoleState GetConcreteState(MoleState stateEnum);
+    }
 }

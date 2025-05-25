@@ -1,0 +1,17 @@
+{
+    "name": "WhackAThem.GameLogics.Moles",
+    "rootNamespace": "",
+    "references": [
+        "GUID:16c574c6802adca4a961fd7bd82ed8ce",
+        "GUID:d74c91143a1790840aa4fcb9d0651302"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

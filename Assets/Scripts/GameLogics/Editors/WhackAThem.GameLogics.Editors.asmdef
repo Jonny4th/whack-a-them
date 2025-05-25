@@ -1,0 +1,19 @@
+{
+    "name": "WhackAThem.GameLogics.Editors",
+    "rootNamespace": "",
+    "references": [
+        "GUID:10c192e990f5e6d49b6d850a72723635",
+        "GUID:16c574c6802adca4a961fd7bd82ed8ce"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
