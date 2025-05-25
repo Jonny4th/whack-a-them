@@ -15,7 +15,10 @@ namespace WhackAThem.GameLogics.Managers
         private TMP_Text m_ScoreText;
 
         [SerializeField]
-        Button m_StartButton;
+        private GameObject m_StartPanel;
+
+        [SerializeField]
+        private Button m_StartButton;
 
         [SerializeField]
         private float m_GameDuration = 60f;
@@ -80,7 +83,7 @@ namespace WhackAThem.GameLogics.Managers
             m_Score = 0;
             m_ScoreText.text = $"Score: {m_Score}";
 
-            m_StartButton.gameObject.SetActive(false);
+            m_StartPanel.gameObject.SetActive(false);
             m_GameProcess = StartCoroutine(GameProcess());
         }
 
@@ -97,7 +100,7 @@ namespace WhackAThem.GameLogics.Managers
                 mole.SetState(MoleState.Inactive);
             }
 
-            m_StartButton.gameObject.SetActive(true);
+            m_StartPanel.gameObject.SetActive(true);
             m_MusicChannel.Play(m_StartMenuMusic);
         }
 
